@@ -18,8 +18,12 @@ class LocalRepositoryMatkul (
         matakuliahDao.updateMatakuliah(mataKuliah)
     }
 
-    override fun getMatakuliah(mataKuliah: MataKuliah): Flow<List<MataKuliah>> {
+    override fun getMatakuliah(kode : String): Flow<MataKuliah> {
+        return matakuliahDao.getMatakuliah(kode)
+    }
+
+    override fun getAllMatakuliah(): Flow<List<MataKuliah>> {
         return matakuliahDao.getAllMatakuliah()
     }
-    
+
     }

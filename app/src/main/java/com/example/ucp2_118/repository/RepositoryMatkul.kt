@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepositoryMatkul {
     suspend fun insertMatakuliah(mataKuliah: MataKuliah)
-    fun getAllMatakuliah(mataKuliah: MataKuliah)
-    fun getMatakuliah(mataKuliah: MataKuliah): Flow<List<MataKuliah>>
+    fun getAllMatakuliah(): Flow<List<MataKuliah>>
+    fun getMatakuliah(kode : String): Flow<MataKuliah>
     suspend fun deleteMatakuliah(mataKuliah: MataKuliah)
     suspend fun updateMatakuliah(mataKuliah: MataKuliah)
 }
