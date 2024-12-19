@@ -27,6 +27,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -43,6 +44,7 @@ import com.example.ucp2_118.ui.customwidget.TopAppBar
 import com.example.ucp2_118.ui.viewmodel.HomeDsnViewModel
 import com.example.ucp2_118.ui.viewmodel.HomeUiState
 import com.example.ucp2_118.ui.viewmodel.PenyediaViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeDsnView(
@@ -102,13 +104,24 @@ fun BodyHomeDsnView(
                 CircularProgressIndicator()
             }
         }
+
+        homeUiState.isError->{
+            LaunchedEffect(homeUiState.errorMessage){
+                homeUiState.errorMessage?.let{message->
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(message)
+                    }
+                }
+            }
+        }
+
         homeUiState.listDsn.isEmpty()->{
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "Tidak ada data mahasiswa.",
+                    text = "Tidak ada data dosen.",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(18.dp)
@@ -137,7 +150,7 @@ fun ListDosen(
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit ={}
 ){
-    LazyColumn(modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
         items(
             items = listDsn,
             itemContent = {dsn ->
