@@ -21,13 +21,6 @@ object PenyediaViewModel{
                 krsApp().containerApp.repositoryDsn
             )
         }
-
-        initializer {
-            DetailDsnViewModel(
-                createSavedStateHandle(),
-                krsApp().containerApp.repositoryDsn
-            )
-        }
     }
 }
 

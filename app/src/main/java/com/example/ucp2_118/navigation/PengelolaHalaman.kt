@@ -11,10 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ucp2_118.ui.view.dosen.DestinasiInsertDosen
-import com.example.ucp2_118.ui.view.dosen.DetailDsnView
 import com.example.ucp2_118.ui.view.dosen.HomeDsnView
 import com.example.ucp2_118.ui.view.dosen.InsertDsnView
-import com.example.ucp2_118.ui.viewmodel.DetailDsnViewModel
 import com.example.ucp2_118.ui.viewmodel.HomeDsnViewModel
 import com.example.ucp2_118.ui.viewmodel.HomeUiState
 
@@ -46,23 +44,6 @@ fun PengelolaHalaman(
                 },
                 modifier = modifier
             )
-        }
-        composable(AlamatNavigasi.DestinasiDetailDosen.routeWithArg,
-            arguments =  listOf(
-                navArgument(AlamatNavigasi.DestinasiDetailDosen.NIDN){
-                    type = NavType.StringType
-                }
-            )
-        ) {
-            val nidn = it.arguments?.getString(AlamatNavigasi.DestinasiDetailDosen.NIDN)
-            nidn?.let { nidn->
-                DetailDsnView(
-                    onBack = {
-                        navController.popBackStack()
-                    },
-                    modifier = modifier
-                )
-            }
         }
     }
 }
