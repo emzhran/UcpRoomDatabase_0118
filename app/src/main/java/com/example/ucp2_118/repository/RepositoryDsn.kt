@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface RepositoryDsn {
     suspend fun insertDosen(dosen: Dosen)
     fun getAllDosen(): Flow<List<Dosen>>
+    fun getDosen(kode : String): Flow<Dosen>
 }
