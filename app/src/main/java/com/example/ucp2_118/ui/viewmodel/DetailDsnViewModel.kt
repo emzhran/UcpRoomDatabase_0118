@@ -46,7 +46,7 @@ class DetailDsnViewModel (
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(2000),
             initialValue = DetailUiState(
-                isError = true
+                isLoading = true
             )
         )
 }

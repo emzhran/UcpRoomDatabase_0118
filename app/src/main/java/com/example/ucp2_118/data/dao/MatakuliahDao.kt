@@ -1,5 +1,6 @@
 package com.example.ucp2_118.data.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
@@ -7,6 +8,7 @@ import androidx.room.Update
 import com.example.ucp2_118.data.entity.MataKuliah
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface MatakuliahDao {
     @Query("SELECT * FROM matakuliah ORDER BY kode ASC")
     fun getAllMatakuliah(): Flow<List<MataKuliah>>

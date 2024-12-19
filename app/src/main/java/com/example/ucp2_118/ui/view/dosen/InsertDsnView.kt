@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.util.TableInfo
+import com.example.ucp2_118.navigation.AlamatNavigasi
 import com.example.ucp2_118.ui.customwidget.TopAppBar
 import com.example.ucp2_118.ui.viewmodel.DosenEvent
 import com.example.ucp2_118.ui.viewmodel.DosenViewModel
@@ -35,6 +36,10 @@ import com.example.ucp2_118.ui.viewmodel.FormErrorState
 import com.example.ucp2_118.ui.viewmodel.HomeDsnViewModel
 import com.example.ucp2_118.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
+
+object DestinasiInsertDosen : AlamatNavigasi{
+    override val route: String = "insert_dosen"
+}
 
 @Composable
 fun InsertDsnView(
@@ -56,7 +61,7 @@ fun InsertDsnView(
         }
     }
     Scaffold(
-        modifier = Modifier,
+        modifier = modifier,
         snackbarHost = {SnackbarHost(hostState = snackbarHostState)}
     ) { padding->
         Column(
@@ -76,7 +81,7 @@ fun InsertDsnView(
                 },
                 onClick = {
                     coroutineScope.launch { viewModel.saveData() }
-                    onNavigate
+                    onNavigate()
                 }
             )
         }
