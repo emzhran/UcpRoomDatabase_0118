@@ -19,4 +19,10 @@ interface AlamatNavigasi {
         val routeWithArg = "$route/{$KODE}"
     }
 
+    object DestinasiUpdateMatkul : AlamatNavigasi{
+        override val route = "update"
+        const val KODE = "kode"
+        val routeWithArg ="$route/{$KODE}"
+    }
+
 }

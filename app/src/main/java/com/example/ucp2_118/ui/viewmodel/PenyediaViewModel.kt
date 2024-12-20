@@ -21,6 +21,32 @@ object PenyediaViewModel{
                 krsApp().containerApp.repositoryDsn
             )
         }
+
+        initializer {
+            MatkulViewModel(
+                krsApp().containerApp.repositoryMatkul
+            )
+        }
+
+        initializer {
+            HomeMatkulViewModel(
+                krsApp().containerApp.repositoryMatkul
+            )
+        }
+
+        initializer {
+            DetailMatkulViewModel(
+                createSavedStateHandle(),
+                krsApp().containerApp.repositoryMatkul
+            )
+        }
+
+        initializer {
+            UpdateMatkulViewModel(
+                createSavedStateHandle(),
+                krsApp().containerApp.repositoryMatkul
+            )
+        }
     }
 }
 
