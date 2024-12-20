@@ -13,4 +13,10 @@ interface AlamatNavigasi {
         val routeWithArg = "$route/{$NIDN}"
     }
 
+    object DestinasiDetailMatkul : AlamatNavigasi{
+        override val route = "detail"
+        const val KODE = "kode"
+        val routeWithArg = "$route/{$KODE}"
+    }
+
 }
