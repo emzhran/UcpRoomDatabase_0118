@@ -35,6 +35,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +49,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeDsnView(
+    onBack: ()-> Unit,
     viewModel: HomeDsnViewModel = viewModel(factory =  PenyediaViewModel.Factory),
     onAddDsn: ()-> Unit = {},
     onDetailClick: (String) -> Unit = {},
@@ -56,8 +58,8 @@ fun HomeDsnView(
     Scaffold(
         topBar ={
             TopAppBar(
-                onBack = {},
-                showBackButton = false,
+                onBack = onBack,
+                showBackButton = true,
                 judul = "Daftar Dosen"
             )
         },
@@ -72,7 +74,8 @@ fun HomeDsnView(
                     contentDescription = "Tambah Dosen"
                 )
             }
-        }
+        },
+        containerColor = Color(0xFF0B4D4D)
     ) {
         innerpadding-> val homeUiState by viewModel.homeUiState.collectAsState()
 

@@ -2,6 +2,7 @@ package com.example.ucp2_118.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -47,6 +48,9 @@ fun PengelolaHalaman(
                 onAddDsn = {
                     navController.navigate(DestinasiInsertDosen.route)
                 },
+                onBack = {
+                    navController.popBackStack()
+                },
                 modifier = modifier
             )
         }
@@ -77,6 +81,9 @@ fun PengelolaHalaman(
                 },
                 onAddMatkul = {
                     navController.navigate(DestinasiInsertMatkul.route)
+                },
+                onBack = {
+                    navController.popBackStack()
                 },
                 modifier = modifier
             )

@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,13 +48,15 @@ fun HomeMatkulView(
     viewModel: HomeMatkulViewModel = viewModel(factory = PenyediaViewModel.Factory),
     onAddMatkul:()-> Unit ={},
     onDetailClick:(String)-> Unit = {},
+    onBack:()-> Unit,
     modifier: Modifier = Modifier
 ){
     Scaffold(
+        containerColor = Color(0xFF0B4D4D),
         topBar ={
             TopAppBar(
-                onBack = {},
-                showBackButton = false,
+                onBack = onBack,
+                showBackButton = true,
                 judul = "Daftar Matakuliah"
             )
         },
@@ -118,6 +121,7 @@ fun BodyMatkulView(
                     text = "Tidak ada data matakuliah.",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
+                    color = Color.White,
                     modifier = Modifier.padding(16.dp)
                 )
             }
