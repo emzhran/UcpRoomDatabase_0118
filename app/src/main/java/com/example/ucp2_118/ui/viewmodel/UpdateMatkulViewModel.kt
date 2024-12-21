@@ -7,23 +7,52 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ucp2_118.data.entity.Dosen
 import com.example.ucp2_118.data.entity.MataKuliah
 import com.example.ucp2_118.navigation.AlamatNavigasi
+import com.example.ucp2_118.repository.RepositoryDsn
 import com.example.ucp2_118.repository.RepositoryMatkul
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
 class UpdateMatkulViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repositoryMatkul: RepositoryMatkul
+    private val repositoryMatkul: RepositoryMatkul,
+    private val repositoryDsn: RepositoryDsn
 ): ViewModel(){
     var updateUIState by mutableStateOf(MatkulUiState())
         private set
 
-    private val _kode: String = checkNotNull(savedStateHandle[AlamatNavigasi.DestinasiUpdateMatkul.KODE])
+    var dosenUpdate by mutableStateOf<List<String>>(emptyList())
+        private set
 
+    val dosenState: StateFlow<List<Dosen>> = repositoryDsn.getAllDosen()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    fun fetchDosenUpdate(){
+        viewModelScope.launch {
+            try {
+                repositoryDsn.getAllDosen()
+                    .collect{dosenUpdateList->
+                        dosenUpdate = dosenUpdateList.map { it.nama }
+                    }
+            }catch (e: Exception){
+                dosenUpdate = emptyList()
+            }
+        }
+    }
+
+    private val _kode: String = checkNotNull(savedStateHandle[AlamatNavigasi.DestinasiUpdateMatkul.KODE])
     init {
         viewModelScope.launch {
             updateUIState = repositoryMatkul.getMatakuliah(_kode)
@@ -32,7 +61,6 @@ class UpdateMatkulViewModel(
                 .toUIStateMatkul()
         }
     }
-
     fun updateState(matkulEvent: MatkulEvent){
         updateUIState = updateUIState.copy(
             matkulEvent = matkulEvent

@@ -5,29 +5,42 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ucp2_118.data.entity.Dosen
 import com.example.ucp2_118.data.entity.MataKuliah
 import com.example.ucp2_118.repository.LocalRepositoryMatkul
 import com.example.ucp2_118.repository.RepositoryDsn
 import com.example.ucp2_118.repository.RepositoryMatkul
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MatkulViewModel(private val  repositoryMatkul: RepositoryMatkul,
     private val repositoryDsn: RepositoryDsn) : ViewModel(){
-    private val _dosenlist = MutableStateFlow<List<String>>(emptyList())
-    val dosenlist: StateFlow<List<String>> get()= _dosenlist
 
     var uiState by mutableStateOf(MatkulUiState())
 
-    init {
-        fetchAllDosen()
-    }
+    val dosenList: StateFlow<List<Dosen>> = repositoryDsn.getAllDosen()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
 
-    private fun fetchAllDosen(){
+    var dosenInsert by mutableStateOf<List<String>>(emptyList())
+        private set
+
+    fun fetchNamaDosen(){
         viewModelScope.launch {
-            repositoryDsn.getAllDosen().collect{ dosenlist->
-                _dosenlist.value = dosenlist.map { it.nama }
+            try {
+                repositoryDsn.getAllDosen()
+                    .collect{dosenlist->
+                        dosenInsert = dosenlist.map { it.nama }
+                    }
+            } catch (e: Exception){
+                dosenInsert = emptyList()
             }
         }
     }

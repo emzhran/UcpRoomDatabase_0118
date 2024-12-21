@@ -24,7 +24,8 @@ object PenyediaViewModel{
 
         initializer {
             MatkulViewModel(
-                krsApp().containerApp.repositoryMatkul
+                krsApp().containerApp.repositoryMatkul,
+                krsApp().containerApp.repositoryDsn
             )
         }
 
@@ -44,7 +45,8 @@ object PenyediaViewModel{
         initializer {
             UpdateMatkulViewModel(
                 createSavedStateHandle(),
-                krsApp().containerApp.repositoryMatkul
+                krsApp().containerApp.repositoryMatkul,
+                krsApp().containerApp.repositoryDsn
             )
         }
     }
