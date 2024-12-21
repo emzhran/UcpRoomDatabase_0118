@@ -7,11 +7,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ucp2_118.data.entity.MataKuliah
 import com.example.ucp2_118.repository.LocalRepositoryMatkul
+import com.example.ucp2_118.repository.RepositoryDsn
 import com.example.ucp2_118.repository.RepositoryMatkul
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MatkulViewModel(private val  repositoryMatkul: RepositoryMatkul) : ViewModel(){
+class MatkulViewModel(private val  repositoryMatkul: RepositoryMatkul,
+    private val repositoryDsn: RepositoryDsn) : ViewModel(){
+    private val _dosenlist = MutableStateFlow<List<String>>(emptyList())
+    val dosenlist: StateFlow<List<String>> get()= _dosenlist
+
     var uiState by mutableStateOf(MatkulUiState())
+
+    init {
+        fetchAllDosen()
+    }
+
+    private fun fetchAllDosen(){
+        viewModelScope.launch {
+            repositoryDsn.getAllDosen().collect{ dosenlist->
+                _dosenlist.value = dosenlist.map { it.nama }
+            }
+        }
+    }
 
     fun updateState(matkulEvent: MatkulEvent){
         uiState = uiState.copy(
