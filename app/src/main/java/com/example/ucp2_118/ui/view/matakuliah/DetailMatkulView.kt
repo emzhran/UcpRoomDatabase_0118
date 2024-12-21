@@ -1,6 +1,5 @@
-package com.example.ucp2_118.view.matakuliah
+package com.example.ucp2_118.ui.view.matakuliah
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +27,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,7 +36,6 @@ import com.example.ucp2_118.data.entity.MataKuliah
 import com.example.ucp2_118.ui.customwidget.TopAppBar
 import com.example.ucp2_118.ui.viewmodel.DetailMatkulViewModel
 import com.example.ucp2_118.ui.viewmodel.DetailUiState
-import com.example.ucp2_118.ui.viewmodel.MatkulViewModel
 import com.example.ucp2_118.ui.viewmodel.PenyediaViewModel
 import com.example.ucp2_118.ui.viewmodel.toMatakuliahEntity
 

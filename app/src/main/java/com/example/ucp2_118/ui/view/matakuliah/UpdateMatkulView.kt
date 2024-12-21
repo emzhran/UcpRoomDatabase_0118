@@ -1,8 +1,7 @@
-package com.example.ucp2_118.view.matakuliah
+package com.example.ucp2_118.ui.view.matakuliah
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -10,13 +9,14 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2_118.ui.customwidget.TopAppBar
-import com.example.ucp2_118.ui.viewmodel.MatkulViewModel
 import com.example.ucp2_118.ui.viewmodel.PenyediaViewModel
 import com.example.ucp2_118.ui.viewmodel.UpdateMatkulViewModel
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +32,7 @@ fun updateMatkulView(
     viewModel: UpdateMatkulViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val uiState = viewModel.updateUIState
+    val dosenList by viewModel.dosenList.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -82,7 +83,8 @@ fun updateMatkulView(
                             }
                         }
                     }
-                }
+                },
+                dosenList = dosenList
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.example.ucp2_118.view.matakuliah
+package com.example.ucp2_118.ui.view.matakuliah
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -22,6 +21,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,7 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.ucp2_118.repository.RepositoryDsn
+import com.example.ucp2_118.navigation.AlamatNavigasi
 import com.example.ucp2_118.ui.customwidget.TopAppBar
 import com.example.ucp2_118.ui.viewmodel.MatkulErrorState
 import com.example.ucp2_118.ui.viewmodel.MatkulEvent
@@ -41,6 +41,9 @@ import com.example.ucp2_118.ui.viewmodel.MatkulViewModel
 import com.example.ucp2_118.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
 
+object DestinasiInsertMatkul : AlamatNavigasi {
+    override val route: String = "insert_matkul"
+}
 
 @Composable
 fun InsertMatkulView(
@@ -52,6 +55,7 @@ fun InsertMatkulView(
     val uiState = viewModel.uiState
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val dosenList by viewModel.dosenlist.collectAsState()
 
     LaunchedEffect(uiState.matkulEvent) {
         uiState.snackbarMessage?.let { message->
@@ -85,8 +89,9 @@ fun InsertMatkulView(
                     coroutineScope.launch {
                         viewModel.saveData()
                     }
-                    onNavigate
-                }
+                    onNavigate()
+                },
+                dosenList = dosenList
             )
         }
     }
@@ -97,7 +102,8 @@ fun InsertBodyMatkul(
     modifier: Modifier = Modifier,
     onValueChange: (MatkulEvent) -> Unit,
     uiState: MatkulUiState,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    dosenList: List<String>
 ){
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -107,6 +113,7 @@ fun InsertBodyMatkul(
         matkulEvent = uiState.matkulEvent,
         onValueChange = onValueChange,
         errorState = uiState.isEntryValid,
+        dosenList =  dosenList,
         modifier = Modifier.fillMaxWidth()
     )
         Button(
