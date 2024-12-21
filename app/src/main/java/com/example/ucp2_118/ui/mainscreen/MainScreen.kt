@@ -34,7 +34,7 @@ fun MainMenuScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.LightGray)
+            .background(color = Color(0xFF0B4D4D))
     ){
         Column(
             modifier = Modifier
@@ -46,7 +46,7 @@ fun MainMenuScreen(
         {
             Text(
                 text = "Universitas Muhammadiyah Yogyakarta",
-                    color = Color.DarkGray,
+                    color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     fontFamily = FontFamily.SansSerif,
@@ -65,14 +65,16 @@ fun MainMenuScreen(
                 onClick = { onNavigateToDosen() },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Dosen")
+                Text(text = "Dosen",
+                    color = Color.White)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = { onNavigateToMatakuliah() },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Matakuliah")
+                Text(text = "Matakuliah",
+                    color = Color.White)
             }
         }
     }

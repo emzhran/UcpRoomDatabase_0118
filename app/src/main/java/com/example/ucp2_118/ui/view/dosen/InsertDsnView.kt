@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -23,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -61,6 +63,7 @@ fun InsertDsnView(
         }
     }
     Scaffold(
+        containerColor = Color(0xFF0B4D4D),
         modifier = modifier,
         snackbarHost = {SnackbarHost(hostState = snackbarHostState)}
     ) { padding->
@@ -131,9 +134,10 @@ fun FormDosen(
             onValueChange = {
                 onValueChange(dosenEvent.copy(nama = it))
             },
-            label = { Text("Nama") },
+            label = { Text("Nama", color = Color.White)},
             isError = errorState.nama != null,
-            placeholder = { Text("Masukkan Nama") }
+            placeholder = { Text("Masukkan Nama", color = Color.White) },
+            textStyle = TextStyle(color = Color.White),
         )
         Text(
             text = errorState.nama?:"",
@@ -144,9 +148,10 @@ fun FormDosen(
             onValueChange = {
                 onValueChange(dosenEvent.copy(nidn = it))
             },
-            label = { Text("NIDN") },
+            label = { Text("NIDN", color = Color.White) },
             isError = errorState.nidn != null,
-            placeholder = { Text("Masukkan NIDN") },
+            placeholder = { Text("Masukkan NIDN", color = Color.White) },
+            textStyle = TextStyle(color = Color.White),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         Text(
@@ -155,7 +160,7 @@ fun FormDosen(
         )
 
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "Jenis Kelamin")
+        Text(text = "Jenis Kelamin", color = Color.White)
         Row (modifier = Modifier.fillMaxWidth())
         {
             jenisKelamin.forEach{jk->
@@ -168,8 +173,12 @@ fun FormDosen(
                         onClick = {
                             onValueChange(dosenEvent.copy(jenisKelamin = jk))
                         },
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = Color.White,
+                            unselectedColor = Color.White
+                        )
                     )
-                    Text(text = jk)
+                    Text(text = jk, color = Color.White)
                 }
             }
         }

@@ -10,6 +10,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,14 +35,16 @@ fun TopAppBar(
                 onClick = onBack,
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Text("Kembali")
+                Text("Kembali",
+                    color = Color.White)
             }
-            Spacer(modifier = Modifier.weight(3f))
+            Spacer(modifier = Modifier.weight(5f))
         }
     }
         Text(
             text = judul,
             fontWeight = FontWeight.Bold,
+            color = Color.White,
             fontSize = 30.sp,
             modifier = Modifier.align(Alignment.Center)
         )

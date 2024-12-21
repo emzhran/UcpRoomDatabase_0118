@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2_118.ui.customwidget.TopAppBar
@@ -56,6 +57,7 @@ fun updateMatkulView(
     }
 
     Scaffold(
+        containerColor = Color(0xFF0B4D4D),
         modifier = Modifier,
         snackbarHost ={ SnackbarHost(hostState = snackbarHostState) },
         topBar ={

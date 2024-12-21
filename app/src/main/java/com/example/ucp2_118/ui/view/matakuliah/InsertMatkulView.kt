@@ -22,6 +22,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -37,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -79,6 +81,14 @@ fun InsertMatkulView(
         }
     }
     Scaffold(
+        containerColor = Color(0xFF0B4D4D),
+        topBar ={
+            TopAppBar(
+                onBack = onBack,
+                showBackButton = true,
+                judul = "Tambah Matakuliah"
+            )
+        },
         modifier = Modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {padding->
@@ -88,11 +98,6 @@ fun InsertMatkulView(
                 .padding(padding)
                 .padding(15.dp)
         ) {
-            TopAppBar(
-                onBack = onBack,
-                showBackButton = true,
-                judul = "Tambah Matakuliah"
-            )
             InsertBodyMatkul(
                 uiState = uiState,
                 onValueChange ={ updateEvent->
@@ -157,9 +162,10 @@ fun FormMatakuliah(
             onValueChange ={
                 onValueChange(matkulEvent.copy(kode = it))
             },
-            label = { Text("Kode") },
+            label = { Text("Kode", color = Color.White) },
             isError = errorState.kode != null,
-            placeholder ={ Text("Kode MataKuliah") },
+            placeholder ={ Text("Kode MataKuliah", color = Color.White) },
+            textStyle = TextStyle(color = Color.White)
         )
         Text(
             text = errorState.kode ?: "",
@@ -171,9 +177,10 @@ fun FormMatakuliah(
             onValueChange = {
                 onValueChange(matkulEvent.copy(nama = it))
             },
-            label = { Text("Nama Matakuliah") },
+            label = { Text("Nama Matakuliah", color = Color.White) },
             isError = errorState.nama != null,
-            placeholder = { Text("Nama MataKuliah") },
+            placeholder = { Text("Nama MataKuliah", color = Color.White) },
+            textStyle = TextStyle(color = Color.White)
         )
         Text(
             text = errorState.nama ?: "",
@@ -185,9 +192,10 @@ fun FormMatakuliah(
             onValueChange = {
                 onValueChange(matkulEvent.copy(sks = it))
             },
-            label = { Text("SKS") },
+            label = { Text("SKS", color = Color.White) },
             isError = errorState.sks != null,
-            placeholder = { Text("Jumlah SKS") },
+            placeholder = { Text("Jumlah SKS", color = Color.White) },
+            textStyle = TextStyle(color = Color.White),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         Text(
@@ -195,7 +203,7 @@ fun FormMatakuliah(
             color = Color.Red
         )
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "Semester Matakuliah")
+        Text(text = "Semester Matakuliah", color = Color.White)
         Row(modifier = Modifier.fillMaxWidth()) {
             semester.forEach{smstr->
                 Row (
@@ -207,13 +215,17 @@ fun FormMatakuliah(
                         onClick = {
                             onValueChange(matkulEvent.copy(semester = smstr))
                         },
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = Color.White,
+                            unselectedColor = Color.White
+                        )
                     )
-                    Text(text = smstr)
+                    Text(text = smstr, color = Color.White)
                 }
             }
         }
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "Jenis Matakuliah")
+        Text(text = "Jenis Matakuliah", color = Color.White)
         Row(modifier = Modifier.fillMaxWidth()) {
             jenis.forEach{jm->
                 Row (
@@ -225,13 +237,17 @@ fun FormMatakuliah(
                         onClick = {
                             onValueChange(matkulEvent.copy(jenis = jm))
                         },
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = Color.White,
+                            unselectedColor = Color.White
+                        )
                     )
-                    Text(text = jm)
+                    Text(text = jm, color = Color.White)
                 }
             }
         }
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "Dosen Pengampu")
+        Text(text = "Dosen Pengampu", color = Color.White)
         var expanded by remember { mutableStateOf(false) }
         var selectedDosen by remember { mutableStateOf("") }
         Box(
@@ -240,7 +256,7 @@ fun FormMatakuliah(
             OutlinedTextField(
                 value = selectedDosen,
                 onValueChange = { },
-                label = { Text("Pilih Dosen") },
+                label = { Text("Pilih Dosen", color = Color.White) },
                 readOnly = true,
                 modifier = Modifier.fillMaxWidth()
                     .clickable { expanded = true },
@@ -251,7 +267,8 @@ fun FormMatakuliah(
                         modifier = Modifier
                             .clickable { expanded = true }
                     )
-                }
+                },
+                textStyle = TextStyle(color = Color.White)
             )
             DropdownMenu(
                 expanded = expanded,
@@ -260,7 +277,7 @@ fun FormMatakuliah(
             ) {
                 dosenList.forEach { dosen->
                     DropdownMenuItem(
-                        text = { Text(dosen.nama) },
+                        text = { Text(dosen.nama, color = Color.Black) },
                         onClick = {
                             selectedDosen = dosen.nama
                             onValueChange(matkulEvent.copy(dosenPengampu = dosen.nama))

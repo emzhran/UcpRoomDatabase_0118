@@ -48,6 +48,7 @@ fun DetailMatkulView(
     onDeleteClick:()->Unit = {}
 ){
     Scaffold(
+        containerColor = Color(0xFF0B4D4D),
         topBar ={
             TopAppBar(
                 onBack = onBack,
