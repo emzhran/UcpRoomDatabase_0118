@@ -1,6 +1,7 @@
 package com.example.ucp2_118.ui.view.matakuliah
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,7 +61,7 @@ fun HomeMatkulView(
             FloatingActionButton(
                 onClick = onAddMatkul,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(16.dp)
+                modifier = modifier.padding(16.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -142,7 +143,7 @@ fun listMatkul(
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit = {}
 ){
-    LazyColumn(modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
         items(
             items = listMatkul,
             itemContent = {matkul->
@@ -167,41 +168,45 @@ fun CardMatkul(
         modifier = Modifier.fillMaxWidth()
             .padding(8.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.padding(8.dp)
         ) {
-            Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "")
-            Spacer(modifier = Modifier.padding(5.dp))
-            Text(
-                text = matkul.kode,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(imageVector = Icons.Filled.Create, contentDescription = "")
-            Spacer(modifier = Modifier.padding(5.dp))
-            Text(
-                text = matkul.nama,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(imageVector = Icons.Filled.Person, contentDescription = "")
-            Spacer(modifier = modifier.padding(5.dp))
-            Text(
-                text = matkul.dosenPengampu,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "")
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text = matkul.kode,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Filled.Create, contentDescription = "")
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text = matkul.nama,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Filled.Person, contentDescription = "")
+                Spacer(modifier = modifier.padding(5.dp))
+                Text(
+                    text = matkul.dosenPengampu,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
         }
     }
 }

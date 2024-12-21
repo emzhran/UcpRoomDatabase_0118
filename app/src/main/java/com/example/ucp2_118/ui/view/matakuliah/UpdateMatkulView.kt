@@ -32,9 +32,13 @@ fun updateMatkulView(
     viewModel: UpdateMatkulViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val uiState = viewModel.updateUIState
-    val dosenList by viewModel.dosenList.collectAsState()
+    val dosenList by viewModel.dosenState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchDosenUpdate()
+    }
 
     LaunchedEffect(uiState.snackbarMessage) {
         println("LaunchedEffect triggered")
@@ -70,7 +74,7 @@ fun updateMatkulView(
         ) {
             InsertBodyMatkul(
                 uiState = uiState,
-                onValueChange = {updateEvent->
+                onValueChange = { updateEvent->
                     viewModel.updateState(updateEvent)
                 },
                 onClick = {
