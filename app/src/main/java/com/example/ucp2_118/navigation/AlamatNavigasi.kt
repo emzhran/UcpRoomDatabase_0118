@@ -25,4 +25,12 @@ interface AlamatNavigasi {
         val routeWithArg ="$route/{$KODE}"
     }
 
+    object DestinasiMainScreen : AlamatNavigasi{
+        override val route = "utama"
+    }
+
+    object DestinasiHomeMatkul : AlamatNavigasi{
+        override val route = "homematkul"
+    }
+
 }
