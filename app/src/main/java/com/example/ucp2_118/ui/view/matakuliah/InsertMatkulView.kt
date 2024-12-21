@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
@@ -36,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2_118.data.entity.Dosen
@@ -145,7 +147,8 @@ fun FormMatakuliah(
     dosenList: List<Dosen> = emptyList(),
     modifier: Modifier = Modifier
 ){
-    val jenis = listOf("Ganjil", "Genap")
+    val jenis = listOf("Wajib", "Pilihan")
+    val semester = listOf("Ganjil", "Genap")
 
     Column(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -168,7 +171,7 @@ fun FormMatakuliah(
             onValueChange = {
                 onValueChange(matkulEvent.copy(nama = it))
             },
-            label = { Text("Nama") },
+            label = { Text("Nama Matakuliah") },
             isError = errorState.nama != null,
             placeholder = { Text("Nama MataKuliah") },
         )
@@ -185,25 +188,30 @@ fun FormMatakuliah(
             label = { Text("SKS") },
             isError = errorState.sks != null,
             placeholder = { Text("Jumlah SKS") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         Text(
             text = errorState.sks ?: "",
             color = Color.Red
         )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = matkulEvent.semester,
-            onValueChange = {
-                onValueChange(matkulEvent.copy(semester = it))
-            },
-            label = { Text("Semester") },
-            isError = errorState.semester != null,
-            placeholder = { Text("Semester") },
-        )
-        Text(
-            text = errorState.semester ?: "",
-            color = Color.Red
-        )
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(text = "Semester Matakuliah")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            semester.forEach{smstr->
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    RadioButton(
+                        selected = matkulEvent.semester == smstr,
+                        onClick = {
+                            onValueChange(matkulEvent.copy(semester = smstr))
+                        },
+                    )
+                    Text(text = smstr)
+                }
+            }
+        }
         Spacer(modifier = Modifier.height(15.dp))
         Text(text = "Jenis Matakuliah")
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -234,7 +242,8 @@ fun FormMatakuliah(
                 onValueChange = { },
                 label = { Text("Pilih Dosen") },
                 readOnly = true,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
+                    .clickable { expanded = true },
                 trailingIcon = {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
@@ -246,14 +255,15 @@ fun FormMatakuliah(
             )
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = {expanded = false}
+                onDismissRequest = {expanded = false},
+                modifier = Modifier.fillMaxWidth()
             ) {
                 dosenList.forEach { dosen->
                     DropdownMenuItem(
                         text = { Text(dosen.nama) },
                         onClick = {
                             selectedDosen = dosen.nama
-                            onValueChange(MatkulEvent(dosenPengampu = dosen.nama))
+                            onValueChange(matkulEvent.copy(dosenPengampu = dosen.nama))
                             expanded = false
                         }
                     )
